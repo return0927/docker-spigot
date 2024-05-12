@@ -135,13 +135,14 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build the Docker image
-      run: docker build . \
-        --file Dockerfile \
-        --build-arg ARGS=" --remapped" \
-        --build-arg JAVA_VERSION=${{ matrix.versions.java }} \
-        --build-arg SPIGOT_VERSION=${{ matrix.versions.minecraft }} \
-        --tag ${{ env.IMAGE_NAME }}:${{ matrix.versions.minecraft }} \
-        --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.versions.minecraft }}
+      run: |
+        docker build . \
+          --file Dockerfile \
+          --build-arg ARGS=" --remapped" \
+          --build-arg JAVA_VERSION=${{ matrix.versions.java }} \
+          --build-arg SPIGOT_VERSION=${{ matrix.versions.minecraft }} \
+          --tag ${{ env.IMAGE_NAME }}:${{ matrix.versions.minecraft }} \
+          --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.versions.minecraft }}
 
     - name: Publish to Registry
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
